@@ -1,0 +1,84 @@
+﻿@page
+@model projetPanier.Pages.PanierModel
+
+<h2>Votre panier</h2>
+
+@if (Model.Produits.Count == 0)
+{
+    <p>Aucun produit dans le panier.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Prix unitaire</th>
+                <th>Quantité</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model.Produits)
+            {
+                <tr>
+                    <td>
+                        <img src="@p.Image" alt="@p.Nom" style="width:50px; height:auto;" />
+                    </td>
+                    <td>@p.Nom</td>
+                    <td>@p.Prix MAD</td>
+
+                   
+                    <td>
+                        <form method="post" asp-page-handler="ModifierQuantite" class="d-inline">
+                            <input type="hidden" name="id" value="@p.Id" />
+                            <div class="input-group" style="width: 140px;">
+                                <button type="submit"
+                                        name="action"
+                                        value="diminuer"
+                                        class="btn btn-custom-outline"
+                                        style="color: black; border-color: #666;">
+                                    −
+                                </button>
+                                <input type="number"
+                                       name="quantite"
+                                       value="@p.Quantite"
+                                       class="form-control text-center"
+                                       style="width: 50px;"
+                                       readonly />
+                                <button type="submit"
+                                        name="action"
+                                        value="augmenter"
+                                        class="btn btn-outline-secondary"
+                                        style="color: black; border-color: #666;">
+                                    +
+                                </button>
+                            </div>
+                        </form>
+                    </td>
+
+                    <td>@(p.Prix * p.Quantite) MAD</td>
+
+                   
+                    <td>
+                        <form method="post" asp-page-handler="SupprimerTout" class="d-inline">
+                            <input type="hidden" name="id" value="@p.Id" />
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm">
+                                    
+                                Supprimer
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    
+    <form method="post" asp-page-handler="Vider" class="mt-3">
+        <button type="submit" class="btn btn-warning">Vider le panier</button>
+    </form>
+}

@@ -1,0 +1,39 @@
+﻿@page
+@model projetPanier.Pages.ProduitsModel
+
+<h2>Liste des produits</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var p in Model.Produits)
+    {
+        <tr>
+            <td>
+                <img src="@p.Image" alt="@p.Nom" style="width:60px; height:auto;" />
+            </td>
+            <td>@p.Nom</td>
+            <td>@p.Prix MAD</td>
+            <td>
+                <form method="post" asp-page-handler="Ajouter">
+                    <input type="hidden" name="id" value="@p.Id" />
+                    <input type="number" name="quantite" value="1" min="1" class="form-control" style="width:80px; display:inline-block;" />
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+
+
+
